@@ -30,7 +30,7 @@ jobs:
 
       - name: Run Python script to update README
         env:
-          GEMINI: ${{ secrets.GEMINI }}  
+          HF: ${{ secrets.HF }}  
         run: python main.py
 
       - name: Commit and push changes if README updated
