@@ -7,9 +7,7 @@ on:
     paths-ignore:
       - 'README.md'  
 
-env:
-  BASE_URL: ${{ secrets.BASE_URL }}
-  HF: ${{ secrets.HF }}  
+
   
 
 jobs:
@@ -35,6 +33,9 @@ jobs:
           pip install openai anthropic mistralai google google-genai dotenv
 
       - name: Run Python script to update README
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          HF: ${{ secrets.HF }}  
         run: python main.py
 
       - name: Commit and push changes if README updated
