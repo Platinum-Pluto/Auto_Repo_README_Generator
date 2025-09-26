@@ -12,8 +12,8 @@ EXCLUDE_DIRS = {'.git', '__pycache__', 'node_modules', 'venv', 'env', '.idea', '
 EXCLUDE_FILES = {'README.md', 'LICENSE', '.gitignore'}
 EXTENSIONS = (".py", ".js", ".ts", ".java", ".cpp", ".h", ".md", ".html", ".css", ".go", ".rs") 
 
-MAX_TOKENS = 100000  
-CHUNK_SIZE = 5000  
+MAX_TOKENS = 3000  
+CHUNK_SIZE = 2000  
 
 
 
