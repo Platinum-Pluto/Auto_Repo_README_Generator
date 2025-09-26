@@ -31,7 +31,7 @@ jobs:
       - name: Run Python script to update README
         env:
           HF: ${{ secrets.HF }}  
-        run: python update_readme.py
+        run: python main.py
 
       - name: Commit and push changes if README updated
         run: |
