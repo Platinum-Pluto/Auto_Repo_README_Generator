@@ -1,6 +1,4 @@
 import os
-import openai
-from openai import OpenAI
 from llm import available_client, api_call, summarizer_message, readme_gen_message
 
 client, provider = available_client()
@@ -51,18 +49,25 @@ def summarize_file(file_path):
     return summarize_text(f"Combine these chunk summaries into a cohesive file summary for {relative_path}:\n{combined_chunks}")
 
 def summarize_text(prompt):
-    """Call LLM to summarize text, with error handling."""
+    """Call LLM to summarize text, with robust error handling."""
     try:
         response = api_call(client, provider, prompt, summarizer_message)
         return response
-    except openai.error.InvalidRequestError as e:
-        if "context_length_exceeded" in str(e):
+    except Exception as e:
+        error_message = str(e).lower()
+        if "context" in error_message and "length" in error_message:
             print("Context too long; skipping or handling.")
             return "Summary skipped due to excessive length."
-        raise
-    except Exception as e:
-        print(f"API error: {e}")
-        return "Error generating summary."
+        elif "rate limit" in error_message or "quota" in error_message:
+            print("Rate limit or quota exceeded.")
+            return "Summary skipped due to rate limit."
+        elif "timeout" in error_message:
+            print("Request timed out.")
+            return "Summary skipped due to timeout."
+        else:
+            print(f"Unexpected API error: {e}")
+            return "Error generating summary."
+
 
 def generate_readme_content(file_summaries):
     """Generate README using summaries of files."""

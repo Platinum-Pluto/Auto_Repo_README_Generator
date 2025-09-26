@@ -26,11 +26,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install openai anthropic mistralai google google-genai
+          pip install openai anthropic mistralai google google-genai dotenv
 
       - name: Run Python script to update README
         env:
-          HF: ${{ secrets.HF }}  
+          GEMINI: ${{ secrets.GEMINI }}  
         run: python main.py
 
       - name: Commit and push changes if README updated
