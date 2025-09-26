@@ -18,18 +18,18 @@ CHUNK_SIZE = 2000
 
 
 load_dotenv()
-hf = os.getenv('HF')
+hf = os.environ.get("HF")
 openai_api = os.getenv('OPENAI')
 mistral = os.getenv('MISTRAL')
 claude = os.getenv('CLAUDE')
 grok = os.getenv('GROK')
 gemini = os.getenv('GEMINI')
 open_router = os.getenv('OPEN_ROUTER')
-BASE_URL = os.getenv('BASE_URL')
+BASE_URL = os.environ.get("BASE_URL")
 
 
-print(f"HF: {hf}")
-print(f"BASE_URL: {BASE_URL}")
+if not hf or not BASE_URL:
+    raise RuntimeError("❌ Missing HF or BASE_URL environment variable. Check GitHub secrets.")
 
 def summarizer_message(prompt, provider):
     same_message = ["openai", "mistral", "claude", "openrouter", "grok"]
