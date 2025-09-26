@@ -18,7 +18,7 @@ CHUNK_SIZE = 2000
 
 
 load_dotenv()
-hf = os.environ["HF"]
+hf = os.getenv("HF")
 openai_api = os.getenv('OPENAI')
 mistral = os.getenv('MISTRAL')
 
