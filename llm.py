@@ -16,31 +16,41 @@ gemini = os.getenv('GEMINI')
 open_router = os.getenv('OPEN_ROUTER')
 BASE_URL = os.getenv('BASE_URL')
 
-def summarizer_message(prompt):
-    messages=[
-        {
-            "role": "system", 
-            "content": "You are a concise code summarizer. Provide key points, structure, and purpose without unnecessary details."
-        },
-        {
-            "role": "user", 
-            "content": prompt
-        }
-    ]
-    return messages 
+def summarizer_message(prompt, provider):
+    same_message = ["openai", "mistral", "claude", "openrouter", "grok"]
+    if provider in same_message:
+        messages=[
+            {
+                "role": "system", 
+                "content": "You are a concise code summarizer. Provide key points, structure, and purpose without unnecessary details."
+            },
+            {
+                "role": "user", 
+                "content": prompt
+            }
+        ]
+        return messages
+    else:
+        return f"You are a concise code summarizer. Provide key points, structure, and purpose without unnecessary details.\n {prompt}"
 
-def readme_gen_message(prompt):
-    messages=[
-        {
-            "role": "system", 
-            "content": "You are a helpful assistant that generates repository documentation from file summaries."
-        },
-        {
-            "role": "user", 
-            "content": prompt
-        }
-    ]
-    return messages 
+
+
+def readme_gen_message(prompt, provider):
+    same_message = ["openai", "mistral", "claude", "openrouter", "grok"]
+    if provider in same_message:
+        messages=[
+            {
+                "role": "system", 
+                "content": "You are a helpful assistant that generates repository documentation from file summaries."
+            },
+            {
+                "role": "user", 
+                "content": prompt
+            }
+        ]
+        return messages
+    else:
+        return "You are a helpful assistant that generates repository documentation from file summaries."
 
 def available_client():
     try:
@@ -76,13 +86,13 @@ def api_call(client, provider, prompt, messages):
         case "openai":
             response = client.chat.completions.create(
                         model="gpt-4o",
-                        messages=messages(prompt),
+                        messages=messages(prompt, provider),
                         max_tokens=1000,  
                         temperature=0.5
             )  
             return response.choices[0].message.content.strip()
         case "gemini":
-            content = f"You are a concise code summarizer. Provide key points, structure, and purpose without unnecessary details.\n {prompt}"
+            content = messages(prompt, provider)
             contents = [
                 {"type": "input_text", "text": content}
             ]
@@ -94,32 +104,32 @@ def api_call(client, provider, prompt, messages):
         case "mistral":
             response = client.chat.complete(
                 model = "mistral-large-latest",
-                messages = messages(prompt)
+                messages = messages(prompt, provider)
             )
             return response.choices[0].message.content 
         case "claude":
             response = client.messages.create(
                 model = "claude-sonnet-4-20250514",
                 max_tokens = 1000,
-                messages = messages(prompt)
+                messages = messages(prompt, provider)
             )
             return response.content
         case "openrouter":
             response = client.chat.completions.create(
                 model = "deepseek/deepseek-r1:free",
-                messages = messages(prompt)
+                messages = messages(prompt, provider)
             )
             return response.choices[0].message.content 
         
         case "grok":
             response = client.chat.completions.create(
                 model = "grok-beta",
-                messages = messages(prompt)
+                messages = messages(prompt, provider)
             )
             return response.choices[0].message.content 
         case "HF":
             headers = {"Authorization": f"Bearer {hf}"}
-            content = f"You are a concise code summarizer. Provide key points, structure, and purpose without unnecessary details.\n {prompt}"
+            content = messages(prompt, provider)
             r = requests.get(f"{BASE_URL}/chat", params={"prompt": content}, headers=headers)
             response = r.json()
             return response["response"]
