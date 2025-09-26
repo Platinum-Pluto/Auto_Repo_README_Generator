@@ -27,7 +27,7 @@ claude = os.getenv('CLAUDE')
 grok = os.getenv('GROK')
 gemini = os.getenv('GEMINI')
 open_router = os.getenv('OPEN_ROUTER')
-BASE_URL = os.environ["BASE_URL"]
+BASE_URL = os.getenv("BASE_URL")
 
 if not hf or not BASE_URL:
     raise RuntimeError("❌ Missing HF or BASE_URL environment variable. Check GitHub secrets.")
