@@ -1,5 +1,5 @@
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 from openai import OpenAI
 from mistralai import Mistral
 import anthropic
@@ -16,7 +16,7 @@ CHUNK_SIZE = 2000
 
 
 
-#load_dotenv()
+load_dotenv()
 hf = os.environ.get("HF")
 openai_api = os.getenv('OPENAI') or None
 mistral = os.getenv('MISTRAL') or None
