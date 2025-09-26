@@ -27,6 +27,10 @@ gemini = os.getenv('GEMINI')
 open_router = os.getenv('OPEN_ROUTER')
 BASE_URL = os.getenv('BASE_URL')
 
+
+print(f"HF: {hf}")
+print(f"BASE_URL: {BASE_URL}")
+
 def summarizer_message(prompt, provider):
     same_message = ["openai", "mistral", "claude", "openrouter", "grok"]
     if provider in same_message:
