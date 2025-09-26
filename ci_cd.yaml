@@ -26,11 +26,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install openai  
+          pip install openai anthropic mistralai google google-genai
 
       - name: Run Python script to update README
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  
+          HF: ${{ secrets.HF }}  
         run: python update_readme.py
 
       - name: Commit and push changes if README updated
