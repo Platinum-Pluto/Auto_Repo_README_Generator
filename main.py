@@ -18,14 +18,14 @@ CHUNK_SIZE = 2000
 
 
 load_dotenv()
-hf = os.environ.get("HF")
+hf = os.environ["HF"]
 openai_api = os.getenv('OPENAI')
 mistral = os.getenv('MISTRAL')
 claude = os.getenv('CLAUDE')
 grok = os.getenv('GROK')
 gemini = os.getenv('GEMINI')
 open_router = os.getenv('OPEN_ROUTER')
-BASE_URL = os.environ.get("BASE_URL")
+BASE_URL = os.environ["BASE_URL"]
 
 
 if not hf or not BASE_URL:
