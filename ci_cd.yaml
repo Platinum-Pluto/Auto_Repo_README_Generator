@@ -10,6 +10,8 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     timeout-minutes: 30 
 
     steps:
@@ -30,7 +32,9 @@ jobs:
 
       - name: Run Python script to update README
         env:
-          GEMINI: ${{ secrets.GEMINI }}  
+          GEMINI: ${{ secrets.GEMINI }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          HF: ${{ secrets.HF_TOKEN }}  
         run: python main.py
 
       - name: Commit and push changes if README updated
