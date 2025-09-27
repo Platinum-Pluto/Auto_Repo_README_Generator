@@ -1,7 +1,7 @@
 # Repository Documentation
 
 ## Description
-This repository contains 3 summarized files.
+This repository contains 3 files.
 
 ## Files
 - `main.py`
