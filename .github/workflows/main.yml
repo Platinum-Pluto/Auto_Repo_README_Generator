@@ -1,0 +1,52 @@
+name: Update README
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'  
+
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openai anthropic mistralai google google-genai dotenv
+
+      - name: Run Python script to update README
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          HF: ${{ secrets.HF }}
+          OPENAI: ${{ secrets.OPENAI }}
+          MISTRAL: ${{ secrets.MISTRAL }}
+          CLAUDE: ${{ secrets.CLAUDE }}
+          GROK: ${{ secrets.GROK }}
+          GEMINI: ${{ secrets.GEMINI }}
+          OPEN_ROUTER: ${{ secrets.OPEN_ROUTER }}
+
+        run: python main.py
+
+      - name: Commit and push changes if README updated
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add README.md
+          git diff --staged --quiet || git commit -m "Auto-update README.md [skip ci]"
+          git push origin main || true  # Push if changes, ignore if no changes
