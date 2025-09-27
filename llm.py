@@ -51,7 +51,7 @@ def readme_gen_message(prompt, provider):
         ]
         return messages
     else:
-        return "You are a helpful assistant that generates repository documentation from file summaries."
+        return f"You are a helpful assistant that generates repository documentation from file summaries.\n {prompt}"
 
 def available_client():
     try:
@@ -94,12 +94,10 @@ def api_call(client, provider, prompt, messages):
             return response.choices[0].message.content.strip()
         case "gemini":
             content = messages(prompt, provider)
-            contents = [
-                {"type": "input_text", "text": content}
-            ]
+            # Fixed: Pass content directly as string to Gemini
             response = client.models.generate_content(
-                model = "gemini-2.5-flash",
-                contents = contents
+                model="gemini-2.5-flash",
+                contents=content  # ✅ Direct string content
             )
             return response.text
         case "mistral":
@@ -114,7 +112,7 @@ def api_call(client, provider, prompt, messages):
                 max_tokens = 1000,
                 messages = messages(prompt, provider)
             )
-            return response.content
+            return response.content[0].text if response.content else ""
         case "openrouter":
             response = client.chat.completions.create(
                 model = "deepseek/deepseek-r1:free",
@@ -134,4 +132,3 @@ def api_call(client, provider, prompt, messages):
             r = requests.get(f"{BASE_URL}/chat", params={"prompt": content}, headers=headers)
             response = r.json()
             return response["response"]
-        
