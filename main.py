@@ -29,7 +29,7 @@ mistral = os.environ.get("MISTRAL")
 claude = os.environ.get("CLAUDE")
 grok = os.environ.get("GROK")
 gemini = os.environ.get("GEMINI")
-open_router = os.environ.get("OPEN_ROUTER") or os.environ.get("OPEN_ROUTER_KEY")
+open_router = os.environ.get("OPEN_ROUTER")
 BASE_URL = os.environ.get("BASE_URL")
 
 
