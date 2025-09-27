@@ -15,12 +15,12 @@ CHUNK_SIZE = 2000
 
 
 hf = os.environ["HF"]
-openai_api = os.environ['OPENAI']
-mistral = os.environ['MISTRAL']
-claude = os.environ['CLAUDE']
-grok = os.environ['GROK'] 
-gemini = os.environ['GEMINI']
-open_router = os.environ['OPEN_ROUTER'] 
+openai_api = os.environ["OPENAI"]
+mistral = os.environ["MISTRAL"]
+claude = os.environ["CLAUDE"]
+grok = os.environ["GROK"] 
+gemini = os.environ["GEMINI"]
+open_router = os.environ["OPEN_ROUTER"] 
 BASE_URL = os.environ["BASE_URL"]
 
 if not hf or not BASE_URL or not openai_api or not mistral or not claude or not grok or not gemini or not open_router:
