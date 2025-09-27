@@ -33,7 +33,14 @@ jobs:
       - name: Run Python script to update README
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
-          HF: ${{ secrets.HF }}  
+          HF: ${{ secrets.HF }}
+          OPENAI: ${{ secrets.OPENAI }}
+          MISTRAL: ${{ secrets.MISTRAL }}
+          CLAUDE: ${{ secrets.CLAUDE }}
+          GROK: ${{ secrets.GROK }}
+          GEMINI: ${{ secrets.GEMINI }}
+          OPEN_ROUTER: ${{ secrets.OPEN_ROUTER }}
+
         run: python main.py
 
       - name: Commit and push changes if README updated
