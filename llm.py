@@ -17,10 +17,6 @@ open_router = os.environ["OPEN_ROUTER"]
 BASE_URL = os.environ["BASE_URL"]
 
 
-
-if not hf or not BASE_URL or not openai_api or not mistral or not claude or not grok or not gemini or not open_router:
-    raise RuntimeError("❌ Missing environment variable. Check GitHub secrets.")
-
 def summarizer_message(prompt, provider):
     same_message = ["openai", "mistral", "claude", "openrouter", "grok"]
     if provider in same_message:
