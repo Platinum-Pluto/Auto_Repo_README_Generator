@@ -1,5 +1,5 @@
 import os
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from openai import OpenAI
 from mistralai import Mistral
 import anthropic
@@ -16,15 +16,15 @@ CHUNK_SIZE = 2000
 
 
 
-load_dotenv()
-hf = os.environ.get("HF")
+#load_dotenv()
+hf = os.environ["HF"]
 openai_api = os.getenv('OPENAI') or None
 mistral = os.getenv('MISTRAL') or None
 claude = os.getenv('CLAUDE') or None
 grok = os.getenv('GROK') or None
 gemini = os.getenv('GEMINI') or None
 open_router = os.getenv('OPEN_ROUTER') or None
-BASE_URL = os.environ.get("BASE_URL")
+BASE_URL = os.environ["BASE_URL"]
 
 if not hf or not BASE_URL:
     raise RuntimeError("❌ Missing HF or BASE_URL environment variable. Check GitHub secrets.")
